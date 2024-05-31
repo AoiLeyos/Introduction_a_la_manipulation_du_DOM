@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Score Keeper</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <main>
+            <nav>
+                <a class="m-2" href="../index.html">Accueil</a>
+            </nav>
+            <div class="flex flex-col items-center flex">
+                <div class="border-solid border-2 px-4">
+                    <h1 class="ml-2 mt-2">0 - 0</h1>
+                    <p class="ml-2">playing to: <span
+                              id="current-target"></span>
+                    </p>
+                    <input class="w-64 mx-2 border-solid border-2" id="parti"
+                           type="number" min="0">
+                </div>
+                <div class="button">
+                    <button id="player-one-btn"
+                            class="border-solid border-2 border-black rounded hover:text-white hover:bg-black m-2 px-2">Player
+                        One</button>
+                    <button id="player-two-btn"
+                            class="border-solid border-2 border-black rounded hover:text-white hover:bg-black m-2 px-2">Player
+                        Two</button>
+                    <button id="reset-btn"
+                            class="border-solid border-2 border-black rounded hover:text-white hover:bg-black m-2 px-2">Reset</button>
+                </div>
+            </div>
+            <script>
+                const currentScoreDisplay = document.querySelector('h1');
+                const targetScoreInput = document.getElementById('parti');
+                const player1Btn = document.getElementById('player-one-btn');
+                const player2Btn = document.getElementById('player-two-btn');
+                const resetBtn = document.getElementById('reset-btn');
+
+
+
+                let currentScore1 = 0;
+                let currentScore2 = 0;
+                let targetScore = 5;
+
+                function updateScoreDisplay() {
+                    currentScoreDisplay.textContent = `${currentScore1} - ${currentScore2}`
+                    let scoreDisplay = `${currentScore1} - ${currentScore2}`;
+
+                    if (currentScore1 >= targetScore) {
+                        scoreDisplay = `<span style="color:green;">${currentScore1}</span> - <span style="color:red;">${currentScore2}</span>`;
+                    } else if (currentScore2 >= targetScore) {
+                        scoreDisplay = `<span style="color:red;">${currentScore1}</span> - <span style="color:green;">${currentScore2}</span>`;
+                    }
+
+                    currentScoreDisplay.innerHTML = scoreDisplay;
+                    document.getElementById('current-target').textContent = targetScore;
+
+                }
+
+                player1Btn.addEventListener('click', () => {
+                    currentScore1++;
+                    if (currentScore1 >= targetScore + 1 || currentScore2 >= targetScore) {
+                        declareWinner();
+                    }
+                    updateScoreDisplay();
+                });
+                player2Btn.addEventListener('click', () => {
+                    currentScore2++;
+                    if (currentScore2 >= targetScore + 1 || currentScore1 >= targetScore) {
+                        declareWinner();
+                    }
+                    updateScoreDisplay();
+                })
+
+                resetBtn.addEventListener('click', () => {
+                    resetGame();
+                });
+
+                function resetGame() {
+                    currentScore1 = 0;
+                    currentScore2 = 0;
+                    updateScoreDisplay();
+                }
+
+                targetScoreInput.addEventListener('input', () => {
+                    targetScore = parseInt(targetScoreInput.value);
+                    if (isNaN(targetScore) || targetScore < 1) {
+                        targetScore = 10; // Default to 10 if the input is invalid
+                    }
+                    resetGame();
+                });
+            </script>
+        </main>
+    </body>
+</html>
