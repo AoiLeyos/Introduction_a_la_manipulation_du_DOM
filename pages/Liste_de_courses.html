@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Liste de courses</title>
+        <link rel="stylesheet" href="../build/Liste_de_courses.css">
+    </head>
+    <body>
+        <h1>Liste de courses</h1>
+        <form id="new-course-form">
+            <input type="text" id="course-name" name="course-name"
+                   placeholder="Objet à acheté">
+            <button type="submit">Ajouter a la liste</button>
+            <label for="course-name"></label>
+        </form>
+        <ul id="course-list">
+        </ul>
+        <script>
+            const courseList = document.getElementById("course-list");
+            const newCourseForm = document.getElementById("new-course-form");
+
+            newCourseForm.addEventListener("submit", (event) => {
+                event.preventDefault(); //empeche le formulaire de se soumettre normalement
+                const courseName = document.getElementById("course-name").value;
+                if (courseName !== "") {
+                    const newCourse = document.createElement("li");
+                    newCourse.innerText = courseName;
+                    courseList.append(newCourse);
+                    document.getElementById("course-name").value = ""; // pour avoir un input vide a chaque ajout
+                }
+            });
+        </script>
+    </body>
+</html>
