@@ -5,21 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Liste de courses</title>
         <link rel="stylesheet" href="../build/Liste_de_courses.css">
-        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
         <nav>
-            <a class="border-solid border-4" href="../index.html">Accueil</a>
+            <a href="../index.html">Accueil</a>
         </nav>
-        <h1>Liste de courses</h1>
-        <form id="new-course-form">
-            <input type="text" id="course-name" name="course-name"
-                   placeholder="Objet à acheter">
-            <button type="submit">Ajouter a la liste</button>
-            <label for="course-name"></label>
-        </form>
-        <ul id="course-list">
-        </ul>
+        <div class="content">
+            <div class="border">
+                <h1>Liste de courses</h1>
+                <form class="formulaire" id="new-course-form">
+                    <input type="text" id="course-name" name="course-name"
+                           placeholder="Objet à acheter">
+                    <button class="center" type="submit">Ajouter a la
+                        liste</button>
+                    <label for="course-name"></label>
+                </form>
+                <ul id="course-list">
+                </ul>
+            </div>
+        </div>
         <script>
             const courseList = document.getElementById("course-list");
             const newCourseForm = document.getElementById("new-course-form");
@@ -29,7 +33,52 @@
                 const courseName = document.getElementById("course-name").value;
                 if (courseName !== "") {
                     const newCourse = document.createElement("li");
-                    newCourse.innerText = courseName;
+                    newCourse.classList.add("course-item");
+
+                    const courseText = document.createElement("span");
+                    courseText.textContent = courseName;
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Editer";
+                    editButton.addEventListener("click", () => {
+                        const input = document.createElement("input");
+                        input.value = courseText.textContent;
+                        input.classList.add("edit-input");
+                        newCourse.replaceChild(input, courseText);
+
+                        const saveButton = document.createElement("button");
+                        saveButton.textContent = "Sauvegarder";
+                        saveButton.classList.add("save-button");
+                        newCourse.replaceChild(saveButton, editButton);
+
+                        saveButton.addEventListener("click", saveChanges);
+
+                        input.addEventListener("keyup", (e) => {
+                            if (e.key === "Enter") {
+                                saveChanges();
+                            }
+                        })
+
+
+                        function saveChanges() {
+                            courseText.textContent = input.value;
+                            newCourse.replaceChild(courseText, input);
+                            newCourse.replaceChild(editButton, saveButton)
+
+                        }
+                    })
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Supprimer";
+                    deleteButton.classList.add("center")
+                    deleteButton.addEventListener("click", () => {
+                        courseList.removeChild(newCourse);
+                    })
+
+                    newCourse.append(courseText);
+                    newCourse.append(deleteButton);
+
+                    newCourse.append(editButton);
                     courseList.append(newCourse);
                     document.getElementById("course-name").value = ""; // pour avoir un input vide a chaque ajout
                 }
