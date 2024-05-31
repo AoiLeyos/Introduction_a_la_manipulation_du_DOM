@@ -6,18 +6,18 @@
 .carousel {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: 400px;
     overflow: hidden;
 }
 
+
 .item {
     position: absolute;
-    top: 0;
-    left: 50%;
     width: 100%;
     height: 100%;
     transition: all 0.5s ease;
 }
+
 
 .item.active {
     opacity: 1;
@@ -31,11 +31,8 @@
 
 .prev, .next {
     cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     padding: 16px;
-    color: #fff;
+    color: #2e0808;
     font-weight: bold;
     font-size: 18px;
     transition: all 0.5s ease;
@@ -43,7 +40,7 @@
 }
 
 .prev:hover, .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(12, 10, 10, 0.527);
 }
 
 .prev {
@@ -51,7 +48,7 @@
 }
 
 .next {
-    right: 0;
+    margin-left: 410px;
 }
 
 a {
